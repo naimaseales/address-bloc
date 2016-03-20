@@ -14,6 +14,8 @@ class MenuController
     puts "3 - Search for an entry"
     puts "4 - Import entries from a CSV"
     puts "5 - Exit"
+    # Give users the ability to view a specific entry by number
+    puts "0 - View Entry Number n"
     print "Enter your selection: "
 
     selection = gets.to_i
@@ -38,6 +40,10 @@ class MenuController
     when 5
       puts "Good-bye!"
       exit(0)
+    when 0 # assignment 20 - View specific entry by number
+      system "clear"
+      view_entry_num
+      main_menu
     else
       system "clear"
       puts "Sorry, that is not a valid input"
@@ -49,6 +55,21 @@ class MenuController
         system "clear"
         puts entry.to_s
         entry_submenu(entry)
+    end
+  end
+
+  def view_entry_num
+    entry_count = address_book.entries.count
+    if entry_count < 1
+      puts "No entries to view"
+    elsif entry_count > 0
+      print "Pick an entry to view between 1 - #{entry_count}): "
+      selection = gets.to_i
+      if (1..entry_count).include?(selection)
+          puts address_book.entries[selection - 1].to_s
+      else
+        puts "Sorry, that is not a valid selction."
+      end
     end
   end
 
